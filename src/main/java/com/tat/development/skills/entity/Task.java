@@ -15,8 +15,11 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskID;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "time")
     private String recordTime;
@@ -26,8 +29,9 @@ public class Task {
 
     public Task() {}
 
-    public Task(String text, String recordTime) {
-        this.text = text;
+    public Task(String name, String description, String recordTime) {
+        this.name = name;
+        this.description = description;
         this.recordTime = recordTime;
         completion = false;
     }
@@ -40,12 +44,20 @@ public class Task {
         return taskID;
     }
 
-    public String getText() {
-        return text;
+    public String getName() {
+        return name;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String text) {
+        this.description = text;
     }
 
     public String getRecordTime() {

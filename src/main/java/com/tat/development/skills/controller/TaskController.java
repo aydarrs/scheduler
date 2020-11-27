@@ -6,10 +6,7 @@ import com.tat.development.skills.utils.AppLocale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,7 +33,7 @@ public class TaskController {
     @GetMapping("/all")
     public String getTasksListPage(Model model) {
         model.addAttribute("models", taskService.getAllTasks());
-        return "TasksList";
+        return "task/TasksList";
     }
 
     /**
@@ -44,21 +41,27 @@ public class TaskController {
      */
     @GetMapping("/add")
     public String getAddingPage() {
-        return "TaskAdding";
+        return "task/TaskAdding";
     }
 
     /**
      * Add task into database.
-     * @param text - task description.
+     * @param description - task description.
      * @return - redirect to all tasks page.
      */
     @PostMapping("/add")
-    public String addTask(@RequestParam String text) {
+    public String addTask(@RequestParam String name, @RequestParam String description) {
         Date currentTime = new Date();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE yyyy.MM.dd HH:mm", AppLocale.getRussianLocale());
         String recordTime = dateFormatter.format(currentTime);
-        Task task = new Task(text, recordTime);
+        Task task = new Task(name, description, recordTime);
         taskService.writeTask(task);
+        return "redirect:/skills/tasks/all";
+    }
+
+    @PostMapping("/delete")
+    public String deleteTask(@RequestParam Long id) {
+        taskService.deleteTask(id);
         return "redirect:/skills/tasks/all";
     }
 }

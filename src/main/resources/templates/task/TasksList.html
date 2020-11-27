@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Tasks</title>
+</head>
+<body>
+<div th:with="nav=~{part/Nav.html}">
+    <span th:insert="${nav}"/>
+</div>
+<div class="card-deck">
+<span th:each="m : ${models}">
+<div class="card bg-light mb-3" style="max-width: 20rem;">
+    <div class="card-header" th:text="${m.recordTime}">Время записи</div>
+    <div class="card-body">
+        <h4 class="card-title" th:text="${m.name}">Наименование задачи</h4>
+        <p class="card-text" th:text="${m.description}">Содержимое задачи</p>
+    </div>
+    <div>
+        <form action="/skills/tasks/delete" method="POST">
+            <input type="hidden" class="form-control" name="id" th:value="${m.taskID}"/>
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+    </div>
+</div>
+</span>
+</div>
+<br>
+<p class="lead">
+    <a class="btn btn-primary btn-lg" href="/skills/tasks/add" role="button">Добавить</a>
+</p>
+</body>
+</html>
