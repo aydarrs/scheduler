@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Tasks</title>
+</head>
+<body>
+<span th:each="m : ${models}">
+<div class="card bg-light mb-3" style="max-width: 20rem;">
+    <div class="card-header" th:text="${m.recordTime}">Время записи</div>
+    <div class="card-body">
+        <h4 class="card-title">Наименование задачи</h4>
+        <p class="card-text" th:text="${m.text}">Содержимое задачи</p>
+    </div>
+</div>
+</span>
+</body>
+</html>
