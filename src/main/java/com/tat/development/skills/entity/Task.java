@@ -1,6 +1,9 @@
 package com.tat.development.skills.entity;
 
+import com.tat.development.skills.utils.AppDateFormatterUtil;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Task.
@@ -21,19 +24,55 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "time")
-    private String recordTime;
+    @Column(name = "create_date")
+    private Date createDate;
 
     @Column(name = "completion")
-    private Boolean completion;
+    private Boolean complete;
 
-    public Task() {}
+    @Column(name = "change_date")
+    private Date changeDate;
 
-    public Task(String name, String description, String recordTime) {
+
+    public Task() {
+        setCreateDate(new Date());
+    }
+
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.recordTime = recordTime;
-        completion = false;
+        setCreateDate(new Date());
+        setComplete(false);
+    }
+
+    /**
+     * Completes the task.
+     */
+    public void complete() {
+        changeDate = new Date();
+        setComplete(true);
+    }
+
+    /**
+     * Format create date for user reading.
+     * @return - formatted create date.
+     */
+    public String getFormattedCreateDate() {
+        if (createDate != null) {
+            return AppDateFormatterUtil.getFormattedDate(createDate);
+        }
+        return null;
+    }
+
+    /**
+     * Format change date for user reading.
+     * @return - formatted change date.
+     */
+    public String getFormattedChangeDate() {
+        if (changeDate != null) {
+            return AppDateFormatterUtil.getFormattedDate(changeDate);
+        }
+        return null;
     }
 
     public void setTaskID(Long taskID) {
@@ -60,19 +99,30 @@ public class Task {
         this.description = text;
     }
 
-    public String getRecordTime() {
-        return recordTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setRecordTime(String recordTime) {
-        this.recordTime = recordTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+        if (changeDate == null) {
+            setChangeDate(createDate);
+        }
     }
 
-    public Boolean getCompletion() {
-        return completion;
+    public Boolean isComplete() {
+        return complete;
     }
 
-    public void setCompletion(Boolean completion) {
-        this.completion = completion;
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
+    }
+
+    public Date getChangeDate() {
+        return changeDate;
+    }
+
+    public void setChangeDate(Date changeDate) {
+        this.changeDate = changeDate;
     }
 }

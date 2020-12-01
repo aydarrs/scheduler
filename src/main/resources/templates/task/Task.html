@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <title>Tasks</title>
+</head>
+<body>
+<div th:with="nav=~{part/Nav.html}">
+    <span th:insert="${nav}"/>
+</div>
+<h1 th:text="${task.name}">Наименование задачи</h1>
+<p th:text="${task.description}">Описание задачи</p>
+<div th:if="${!task.complete}">
+    <form action="/skills/tasks/complete" method="POST">
+        <input type="hidden" class="form-control" name="id" th:value="${task.taskID}"/>
+        <button type="submit" class="btn btn-danger">Выполнено</button>
+    </form>
+</div>
+<div th:if="${!task.complete}">
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" th:href="'/skills/tasks/' + ${task.taskID} + '/update'" role="button">Изменить</a>
+    </p>
+</div>
+<div>
+    <form action="/skills/tasks/delete" method="POST">
+        <input type="hidden" class="form-control" name="id" th:value="${task.taskID}"/>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+</div>
+</body>
+</html>

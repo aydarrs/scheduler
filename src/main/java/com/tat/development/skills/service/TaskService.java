@@ -29,6 +29,14 @@ public class TaskService {
     }
 
     /**
+     * @param id - needed task id.
+     * @return - needed task.
+     */
+    public Task getTheTask(Long id) {
+        return taskRepository.findById(id).orElse(null);
+    }
+
+    /**
      * Save new entity into database.
      * @param task - saved entity.
      * @return true, if entity had saved.
@@ -41,6 +49,15 @@ public class TaskService {
         catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * Update entity in database.
+     * @param task - updated entity with changed parameters.
+     * @return true, if entity had updated.
+     */
+    public boolean updateTask(Task task) { //todo Посмотреть, как грамотно реализовать обновление
+        return writeTask(task);
     }
 
     /**

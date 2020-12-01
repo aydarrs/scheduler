@@ -12,11 +12,18 @@
 </div>
 <div class="card-deck">
 <span th:each="m : ${models}">
-<div class="card bg-light mb-3" style="max-width: 20rem;">
-    <div class="card-header" th:text="${m.recordTime}">Время записи</div>
+    <a th:href="'/skills/tasks/' + ${m.taskID}" style="text-decoration: none; color: black"/>
+    <div th:class="${m.complete} ? 'card bg-success mb-3' : 'card bg-light mb-3'"
+     style="max-width: 20rem;">
+    <div class="card-header" th:text="${m.getFormattedCreateDate()}">Время записи</div>
     <div class="card-body">
         <h4 class="card-title" th:text="${m.name}">Наименование задачи</h4>
-        <p class="card-text" th:text="${m.description}">Содержимое задачи</p>
+    </div>
+    <div th:if="${!m.complete}">
+        <form action="/skills/tasks/complete" method="POST">
+            <input type="hidden" class="form-control" name="id" th:value="${m.taskID}"/>
+            <button type="submit" class="btn btn-danger">Выполнено</button>
+        </form>
     </div>
     <div>
         <form action="/skills/tasks/delete" method="POST">
@@ -24,7 +31,7 @@
             <button type="submit" class="btn btn-danger">Удалить</button>
         </form>
     </div>
-</div>
+    </div>
 </span>
 </div>
 <br>
